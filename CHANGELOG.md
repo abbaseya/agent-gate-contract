@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 — 2026-10-11 (draft)
+
+- BINDINGS (Claude Code): `repaired` no longer sends `permissionDecision: "allow"`. The hooks reference documents that `"allow"` skips the permission prompt, so 0.1.0 and 0.1.1 told a repairing gate to auto-approve the call it rewrote. A repair now sends `updatedInput` and `additionalContext` only. Found during the first adoption, by a readiness review that measured it with three `claude -p` runs.
+
 ## 0.1.1 — 2026-10-11 (draft)
 
 - §6: a runtime that cannot apply a `rewrite` or `generate` remedy now downgrades the finding to the strongest remedy it can carry and returns `block`. 0.1.0 said to send the remedy unapplied, which contradicted §6's own validator rule and `examples/invalid/block-when-self-fixable.json`. Found by a stdlib port of the validator during the first adoption.

@@ -1,6 +1,6 @@
 # Agent Gate Contract (AGC) Specification
 
-**Version 0.1.1 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
+**Version 0.1.2 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** follow [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 

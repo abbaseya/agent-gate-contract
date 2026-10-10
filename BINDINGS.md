@@ -14,7 +14,7 @@ How an AGC response travels through a real runtime. Bindings are **non-normative
 | AGC verdict | Hook output |
 |---|---|
 | `allow` | exit 0 with no output |
-| `repaired` | `permissionDecision: "allow"`, the rewritten arguments in `updatedInput`, and the rendered findings in `additionalContext`, so the agent learns what changed |
+| `repaired` | the rewritten arguments in `updatedInput` and the rendered findings in `additionalContext`, with **no** `permissionDecision`, so the rewritten call still goes through the normal permission flow |
 | `block` | `permissionDecision: "deny"`, the rendered findings in `permissionDecisionReason`, and the AGC JSON in `additionalContext` |
 | `escalate` | as `block`, and the hook also sets `continue: false` with a `stopReason` naming the person to ask |
 
@@ -24,12 +24,15 @@ A `repaired` response:
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
-    "permissionDecision": "allow",
     "updatedInput": { "command": "cd /work/.worktrees/metrics-fix/backend && git status" },
     "additionalContext": "AGC repaired: workstream-isolation/main-checkout-access/Bash.command — the command now runs in the workstream."
   }
 }
 ```
+
+**Never send `permissionDecision: "allow"` with a repair.** The hooks reference says `"allow"` "skips the permission prompt", and pairs `updatedInput` with `"allow"` "to auto-approve". A gate that repairs a call must not also approve it: the person's permission settings still decide whether the rewritten call runs. Deny and ask rules are evaluated against the rewritten input either way.
+
+Sending `updatedInput` without a `permissionDecision` is not described in the hooks reference. It was measured on Claude Code 2.1.296 on 2026-10-11: the rewrite applied, and the call still needed the usual approval. Re-check it on your version. If you need a guarantee instead of a measurement, send `permissionDecision: "ask"`, which always shows the person the rewritten call.
 
 Exit code 2 still blocks, and Claude Code shows its stderr to the model. A gate that only exits 2 loses `updatedInput`, so a gate that returns `repaired` MUST use the JSON output.
 
