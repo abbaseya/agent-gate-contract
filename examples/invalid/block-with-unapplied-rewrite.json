@@ -1,0 +1,74 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "comment-budget",
+    "kind": "deterministic",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:77aa10c3e5f9",
+    "scope": [
+      "src/retry.ts",
+      "src/queue.ts"
+    ]
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "comment-budget/derivation-in-comment/src/retry.ts#RETRY_DELAY_MS",
+      "class": "derivation-in-comment",
+      "location": "src/retry.ts#RETRY_DELAY_MS",
+      "what": "A nine-line comment derives the retry delay.",
+      "why": "A comment states what is non-obvious at that line; derivations belong in the spec.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "patch",
+        "applied": false,
+        "edits": [
+          {
+            "path": "src/retry.ts",
+            "find": "// The delay is derived as follows:",
+            "replace": "// 50 ms, set by CAP-4 against the client's backoff."
+          }
+        ]
+      },
+      "check": {
+        "kind": "command",
+        "run": "agc-comment-budget src/retry.ts"
+      }
+    },
+    {
+      "id": "comment-budget/derivation-in-comment/src/queue.ts#flush",
+      "class": "derivation-in-comment",
+      "location": "src/queue.ts#flush",
+      "what": "A six-line comment restates the batching rule from the spec.",
+      "why": "Same class as the finding above.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "rewrite",
+        "applied": false,
+        "input": {
+          "command": "sed -n 1p src/queue.ts"
+        }
+      },
+      "check": {
+        "kind": "command",
+        "run": "agc-comment-budget src/queue.ts"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "derivation-in-comment",
+      "review-history-in-comment"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

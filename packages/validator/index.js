@@ -30,6 +30,11 @@ function verdictDiagnostics(response) {
     if (blocking.length === 0) errors.push(diagnostic('/verdict', '§6', '`block` needs at least one blocking finding'));
     else if (blocking.every(selfFixable)) {
       errors.push(diagnostic('/verdict', '§6', 'every blocking finding has a rewrite or generate remedy, so the gate must apply them and return `repaired`'));
+    } else {
+      blocking.filter(selfFixable).forEach((finding) => {
+        errors.push(diagnostic(`/findings/${findings.indexOf(finding)}/remedy`, '§6',
+          'a `block` cannot carry an unapplied rewrite or generate remedy; downgrade it to patch, command, delegate or decide'));
+      });
     }
   }
   if (response.verdict === 'repaired') {

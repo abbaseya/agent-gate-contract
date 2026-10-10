@@ -6,5 +6,6 @@
   "complete-coverage-missing-class.json": "\u00a78",
   "decide-without-options.json": "schema",
   "block-without-findings.json": "schema",
-  "invalid-chains/still-open-never-raised": "\u00a79"
+  "invalid-chains/still-open-never-raised": "\u00a79",
+  "block-with-unapplied-rewrite.json": "\u00a76"
 }

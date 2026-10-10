@@ -1,6 +1,6 @@
 {
   "name": "@agent-gate-contract/validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Validates Agent Gate Contract responses and chains: the JSON Schema plus the rules a schema cannot express.",
   "type": "module",

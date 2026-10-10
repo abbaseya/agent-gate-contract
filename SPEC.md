@@ -1,6 +1,6 @@
 # Agent Gate Contract (AGC) Specification
 
-**Version 0.1 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
+**Version 0.1.1 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** follow [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
@@ -76,7 +76,7 @@ A project MAY bind a verdict to a wider subject for a trust reason, for example 
 - **[V]** `block` MUST NOT be used when every blocking finding has a `rewrite` or `generate` remedy. Such a gate MUST apply the remedies and return `repaired`.
 - **[V]** `escalate` MUST carry at least one finding with a `decide` remedy.
 
-A gate that cannot apply a remedy in its runtime MUST still send that remedy as data, with `applied: false`, and return `block`.
+A gate whose runtime cannot apply a `rewrite` or `generate` remedy MUST NOT send it unapplied. It MUST downgrade that finding to the strongest remedy it can carry (`patch`, `command`, `delegate` or `decide`) and return `block`. A `rewrite` or `generate` remedy with `applied: false` is therefore never valid on a blocking finding of a `block` answer.
 
 *Evidence: E-1 (one-line fixes repeated by the agent).*
 
