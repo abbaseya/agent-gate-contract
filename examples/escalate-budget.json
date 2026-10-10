@@ -1,0 +1,49 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "spec-audit",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "artifact",
+    "fingerprint": "sha256:c40f2b9d1e83",
+    "scope": [
+      "SPEC.md#CAP-8"
+    ]
+  },
+  "verdict": "escalate",
+  "findings": [
+    {
+      "id": "spec-audit/ambiguous-condition/SPEC.md#CAP-8",
+      "class": "ambiguous-condition",
+      "location": "SPEC.md#CAP-8",
+      "what": "CAP-8 can be read two ways about when the 'other' row is shown.",
+      "why": "A capability must have one reading.",
+      "severity": "blocking",
+      "status": "still-open",
+      "remedy": {
+        "kind": "decide",
+        "ask": "product owner",
+        "options": [
+          "Show the 'other' row only when the spec exists",
+          "Always show the 'other' row"
+        ]
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "CAP-8 states one rule for the 'other' row."
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "ambiguous-condition"
+    ]
+  },
+  "attempt": {
+    "n": 3,
+    "budget": 3
+  }
+}

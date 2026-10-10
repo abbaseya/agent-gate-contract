@@ -1,0 +1,97 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:41d7aa03e9c2",
+    "scope": [
+      "app/sync/job.ts",
+      "app/sync/lock.ts",
+      "docs/sync.md"
+    ]
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "code-review/abort-leaves-terminal-state/app/sync/job.ts#runWithDeadline",
+      "class": "abort-leaves-terminal-state",
+      "location": "app/sync/job.ts#runWithDeadline",
+      "what": "A deadline abort reports `skipped` where the shop needs a re-enable.",
+      "why": "CAP-3: every aborted run must leave a state a later run repairs.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "delegate",
+        "role": "implementation-agent",
+        "authority": "CAP-3"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "An aborted run sets `needs_reenable`, and a test asserts the next run clears it.",
+        "run": "yarn test sync/job"
+      }
+    },
+    {
+      "id": "code-review/abort-leaves-terminal-state/app/sync/lock.ts#withLock",
+      "class": "abort-leaves-terminal-state",
+      "location": "app/sync/lock.ts#withLock",
+      "what": "A lock released at the deadline reports the result as an error.",
+      "why": "Same class: an abort must leave a repairable state.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "delegate",
+        "role": "implementation-agent",
+        "authority": "CAP-3"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "A deadline release sets `needs_reenable`, and a test covers it.",
+        "run": "yarn test sync/lock"
+      }
+    },
+    {
+      "id": "code-review/stale-doc/docs/sync.md#Repair",
+      "class": "stale-doc",
+      "location": "docs/sync.md#Repair",
+      "what": "The doc still says the loader repairs the subscription.",
+      "why": "Docs describe shipped behaviour.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "patch",
+        "applied": false,
+        "edits": [
+          {
+            "path": "docs/sync.md",
+            "find": "The loader repairs the subscription.",
+            "replace": "The nightly job repairs the subscription."
+          }
+        ]
+      },
+      "check": {
+        "kind": "command",
+        "run": "grep -q 'nightly job repairs' docs/sync.md"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "abort-leaves-terminal-state",
+      "stale-doc",
+      "missing-test"
+    ],
+    "not_checked": [
+      "behaviour under 100+ concurrent shops"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:f19c3a6e2b45",
+    "scope": [
+      "app/sync/job.ts",
+      "app/sync/lock.ts",
+      "docs/sync.md"
+    ]
+  },
+  "verdict": "allow",
+  "findings": [],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "abort-leaves-terminal-state",
+      "stale-doc",
+      "missing-test"
+    ]
+  },
+  "attempt": {
+    "n": 3,
+    "budget": 3
+  },
+  "carried": [
+    "code-review/abort-leaves-terminal-state/app/sync/lock.ts#withLock"
+  ]
+}

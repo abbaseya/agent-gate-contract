@@ -1,0 +1,49 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:41d7aa03e9c2",
+    "scope": [
+      "app/sync/job.ts",
+      "app/sync/lock.ts",
+      "docs/sync.md"
+    ]
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "code-review/abort-leaves-terminal-state/app/sync/job.ts#runWithDeadline",
+      "class": "abort-leaves-terminal-state",
+      "location": "app/sync/job.ts#runWithDeadline",
+      "what": "A deadline abort reports `skipped` where the shop needs a re-enable.",
+      "why": "CAP-3: every aborted run must leave a state a later run repairs.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "delegate",
+        "role": "implementation-agent",
+        "authority": "CAP-3"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "An aborted run sets `needs_reenable`, and a test asserts the next run clears it.",
+        "run": "yarn test sync/job"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "stale-doc"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

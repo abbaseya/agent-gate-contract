@@ -1,0 +1,30 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:41d7aa03e9c2",
+    "scope": [
+      "app/sync/job.ts",
+      "app/sync/lock.ts",
+      "docs/sync.md"
+    ]
+  },
+  "verdict": "block",
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "abort-leaves-terminal-state",
+      "stale-doc",
+      "missing-test"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@agent-gate-contract/validator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validates Agent Gate Contract responses and chains: the JSON Schema plus the rules a schema cannot express.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}

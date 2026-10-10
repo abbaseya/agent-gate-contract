@@ -1,0 +1,55 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:8e02bb51f7d0",
+    "scope": [
+      "app/sync/job.ts",
+      "app/sync/lock.ts",
+      "docs/sync.md"
+    ]
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "code-review/abort-leaves-terminal-state/app/sync/lock.ts#withLock",
+      "class": "abort-leaves-terminal-state",
+      "location": "app/sync/lock.ts#withLock",
+      "what": "A lock released at the deadline reports the result as an error.",
+      "why": "Same class: an abort must leave a repairable state.",
+      "severity": "blocking",
+      "status": "still-open",
+      "remedy": {
+        "kind": "delegate",
+        "role": "implementation-agent",
+        "authority": "CAP-3"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "A deadline release sets `needs_reenable`, and a test covers it.",
+        "run": "yarn test sync/lock"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "abort-leaves-terminal-state",
+      "stale-doc",
+      "missing-test"
+    ]
+  },
+  "attempt": {
+    "n": 2,
+    "budget": 3
+  },
+  "carried": [
+    "code-review/abort-leaves-terminal-state/app/sync/job.ts#runWithDeadline",
+    "code-review/stale-doc/docs/sync.md#Repair"
+  ]
+}

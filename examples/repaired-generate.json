@@ -1,0 +1,46 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "pr-body-sections",
+    "kind": "deterministic",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "pull-request",
+    "fingerprint": "sha256:0d7e66b2c4a1",
+    "scope": [
+      "body"
+    ]
+  },
+  "verdict": "repaired",
+  "findings": [
+    {
+      "id": "pr-body-sections/missing-test-results/body#Test results",
+      "class": "missing-test-results",
+      "location": "body#Test results",
+      "what": "The PR body has no test results section.",
+      "why": "Every PR states the suite result measured at its head commit.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "generate",
+        "applied": true,
+        "tool": "scripts/pr-body --section tests"
+      },
+      "check": {
+        "kind": "preview"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "missing-test-results",
+      "decision-keys"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

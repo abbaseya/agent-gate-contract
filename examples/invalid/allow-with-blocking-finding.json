@@ -1,0 +1,47 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "workstream-isolation",
+    "kind": "deterministic",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "tool-call",
+    "fingerprint": "sha256:9c1e4f0a7b2d",
+    "scope": [
+      "Bash.command"
+    ]
+  },
+  "verdict": "allow",
+  "findings": [
+    {
+      "id": "workstream-isolation/main-checkout-access/Bash.command",
+      "class": "main-checkout-access",
+      "location": "Bash.command",
+      "what": "The command runs in the main checkout, not in the session's workstream.",
+      "why": "A pinned session works only in its workstream, because a main checkout can be on any branch.",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "rewrite",
+        "applied": true,
+        "input": {
+          "command": "cd /work/.worktrees/metrics-fix/backend && git status"
+        }
+      },
+      "check": {
+        "kind": "preview"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "main-checkout-access"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

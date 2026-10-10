@@ -1,0 +1,26 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "no-push-to-main",
+    "kind": "deterministic",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "tool-call",
+    "fingerprint": "sha256:5be1c09a77d4",
+    "scope": [
+      "Bash.command"
+    ]
+  },
+  "verdict": "allow",
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "push-to-default-branch"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

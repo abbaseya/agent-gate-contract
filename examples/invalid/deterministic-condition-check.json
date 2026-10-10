@@ -1,0 +1,42 @@
+{
+  "agc": "0.1",
+  "gate": {
+    "id": "comment-budget",
+    "kind": "deterministic",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:77aa10c3e5f9"
+  },
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "comment-budget/x/a.ts#f",
+      "class": "x",
+      "location": "a.ts#f",
+      "what": "w",
+      "why": "y",
+      "severity": "blocking",
+      "status": "new",
+      "remedy": {
+        "kind": "command",
+        "run": "fix"
+      },
+      "check": {
+        "kind": "condition",
+        "condition": "looks right"
+      }
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "x"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

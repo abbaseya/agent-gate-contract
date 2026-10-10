@@ -1,0 +1,10 @@
+{
+  "block-when-self-fixable.json": "\u00a76",
+  "allow-with-blocking-finding.json": "\u00a76",
+  "block-at-spent-budget.json": "\u00a710",
+  "deterministic-condition-check.json": "\u00a77.2",
+  "complete-coverage-missing-class.json": "\u00a78",
+  "decide-without-options.json": "schema",
+  "block-without-findings.json": "schema",
+  "invalid-chains/still-open-never-raised": "\u00a79"
+}
