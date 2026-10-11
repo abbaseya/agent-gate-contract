@@ -7,7 +7,8 @@ How an AGC response travels through a real runtime. Bindings are **non-normative
 | Claude Code hooks | verified against the [hooks reference](https://code.claude.com/docs/en/hooks) |
 | Judgment agents (any runtime) | defined here |
 | CI and SARIF | mapping defined. The SARIF structure was checked against secondary sources only. |
-| Codex, Cursor, other hook runtimes | open. Contributions welcome. |
+| Codex hooks | verified against the [hooks documentation](https://learn.chatgpt.com/docs/hooks), and measured on codex-cli 0.159.0 |
+| Cursor, other hook runtimes | open. Contributions welcome. |
 
 ## Claude Code — PreToolUse
 
@@ -39,6 +40,31 @@ Exit code 2 still blocks, and Claude Code shows its stderr to the model. A gate 
 ## Claude Code — PostToolUse
 
 The tool has already run, so `repaired` uses `updatedToolOutput` to replace the result, and `block` uses the top-level `decision: "block"` with a `reason`. Put the AGC JSON in `additionalContext` either way.
+
+## Codex — PreToolUse
+
+| AGC verdict | Hook output |
+|---|---|
+| `allow` | exit 0 with no output |
+| `repaired` | `permissionDecision: "allow"` with the rewritten arguments in `updatedInput`, and the rendered findings in `additionalContext` |
+| `block` | exit 2, with the rendered findings on stderr, followed by the AGC JSON in one fenced block whose info string is `agc` |
+| `escalate` | as `block`, and the stderr text names the person to ask |
+
+For Bash and `apply_patch`, `updatedInput` holds a string `command`. A repaired `apply_patch` call keeps the patch and changes only the paths in its file headers. For MCP and other local tools, `updatedInput` is the replacement arguments object.
+
+**A Codex repair still sends `"allow"`.** The documentation says to return `updatedInput` "only with `permissionDecision: "allow"`". It does not say whether that `"allow"` skips the approval. It was measured on codex-cli 0.159.0 on 2026-10-11, with `--ask-for-approval on-request` and a read-only sandbox:
+
+- A rewritten Bash call and a rewritten `apply_patch` call each ran the rewritten input.
+- Each still raised the usual approval, as the control run without a hook did.
+- The first, non-escalated Bash attempt ran inside the sandbox and was denied there. `"allow"` did not bypass the sandbox.
+
+Re-check it on your version and approval policy.
+
+**Carry a block on stderr.** The documentation allows exit 2 with the reason on stderr. In the same measurement, a hook that exited 2 had its stderr shown to the model. The `permissionDecisionReason` it also wrote to stdout never reached the model. The documented alternative is exit 0 with `permissionDecision: "deny"` and the reason in `permissionDecisionReason`. That path was not measured.
+
+**Never send `continue`, `stopReason`, `suppressOutput` or `permissionDecision: "ask"`.** The documentation says these are "parsed but not supported yet". Codex then "marks that hook run as failed, reports the error, and continues the tool call". So `escalate` cannot stop the session on Codex. It blocks the call, and the person named in the text decides.
+
+Whether the model acts on `additionalContext` after a repair was not confirmed. In the `apply_patch` run, the agent reported the original file name.
 
 ## Judgment agents
 

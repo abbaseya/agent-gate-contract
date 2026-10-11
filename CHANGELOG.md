@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- BINDINGS (Codex): a new binding for Codex PreToolUse hooks, checked against the Codex hooks documentation and measured on codex-cli 0.159.0. A repair sends `"allow"` with `updatedInput`, which Codex requires, and the call still raised the usual approval in the measurement. A block exits 2 and carries the AGC JSON on stderr, because the stdout JSON of an exit-2 hook never reached the model. Bindings are non-normative, so the contract version is unchanged.
+
 ## 0.1.2 — 2026-10-11 (draft)
 
 - BINDINGS (Claude Code): `repaired` no longer sends `permissionDecision: "allow"`. The hooks reference documents that `"allow"` skips the permission prompt, so 0.1.0 and 0.1.1 told a repairing gate to auto-approve the call it rewrote. A repair now sends `updatedInput` and `additionalContext` only. Found during the first adoption, by a readiness review that measured it with three `claude -p` runs.

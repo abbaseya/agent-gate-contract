@@ -43,7 +43,7 @@ The gate did not explain the fix. **It applied it.** No round happened.
 | **An attempt `budget`,** after which the gate must `escalate` to a person | loops without end |
 | **A `preview` mode:** the same check, before the boundary | failures found at the last step |
 
-[SPEC.md](SPEC.md) is the normative reference. [BINDINGS.md](BINDINGS.md) maps the contract onto Claude Code hooks, judgment agents and SARIF.
+[SPEC.md](SPEC.md) is the normative reference. [BINDINGS.md](BINDINGS.md) maps the contract onto Claude Code hooks, Codex hooks, judgment agents and SARIF.
 
 ## Two kinds of gate, one contract
 
@@ -77,7 +77,7 @@ The validator checks the JSON Schema and the rules a schema cannot express. Thos
 
 ## Status
 
-Draft 0.1. Field names may still change before 1.0. Bindings for Codex, Cursor and other hook runtimes are open.
+Draft 0.1. Field names may still change before 1.0. Bindings for Cursor and other hook runtimes are open.
 
 ## Related
 

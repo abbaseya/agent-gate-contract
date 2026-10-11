@@ -4,6 +4,6 @@
 
 - [SPEC.md](SPEC.md): the normative specification
 - [schema/agc.schema.json](schema/agc.schema.json): JSON Schema 2020-12
-- [BINDINGS.md](BINDINGS.md): Claude Code hooks, judgment agents, SARIF
+- [BINDINGS.md](BINDINGS.md): Claude Code hooks, Codex hooks, judgment agents, SARIF
 - [EVIDENCE.md](EVIDENCE.md): the measurement behind each rule
 - [examples/](examples/): valid, chained and invalid responses
