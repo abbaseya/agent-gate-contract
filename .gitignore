@@ -3,3 +3,4 @@ node_modules/
 !.yarn/releases
 .pnp.*
 .DS_Store
+packages/validator/schema/
