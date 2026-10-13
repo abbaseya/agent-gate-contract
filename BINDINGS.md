@@ -17,7 +17,7 @@ How an AGC response travels through a real runtime. Bindings are **non-normative
 | `allow` | exit 0 with no output |
 | `repaired` | the rewritten arguments in `updatedInput` and the rendered findings in `additionalContext`, with **no** `permissionDecision`, so the rewritten call still goes through the normal permission flow |
 | `block` | `permissionDecision: "deny"`, the rendered findings in `permissionDecisionReason`, and the AGC JSON in `additionalContext` |
-| `escalate` | as `block`, and the hook also sets `continue: false` with a `stopReason` naming the person to ask |
+| `escalate` | as `block`, and the hook also sets `continue: false` with a `stopReason` naming the person to ask, and a `systemMessage` with the same text |
 
 A `repaired` response:
 
@@ -36,6 +36,14 @@ A `repaired` response:
 Sending `updatedInput` without a `permissionDecision` is not described in the hooks reference. It was measured on Claude Code 2.1.296 on 2026-10-11: the rewrite applied, and the call still needed the usual approval. Re-check it on your version. If you need a guarantee instead of a measurement, send `permissionDecision: "ask"`, which always shows the person the rewritten call.
 
 Exit code 2 still blocks, and Claude Code shows its stderr to the model. A gate that only exits 2 loses `updatedInput`, so a gate that returns `repaired` MUST use the JSON output.
+
+**Where the person's name appears on `escalate`.** This was measured on Claude Code 2.1.296 on 2026-10-13, with 3 runs per mode. In every run, the blocked call did not run.
+
+- Interactive session, measured without a `systemMessage`: the screen shows the `stopReason` and the deny reason.
+- `claude -p --output-format json`: the session ends with `terminal_reason` `"hook_stopped"`. The `stopReason`, the deny reason and the `systemMessage` appear nowhere in the output or on stderr.
+- `claude -p --output-format stream-json --verbose`: the `systemMessage` arrives as a `system` event with subtype `informational`, and the deny reason as the `tool_result` of a `user` event. The `stopReason` does not appear.
+
+A caller that runs `claude -p` with JSON output cannot read the name from Claude Code. It needs the name from the gate itself. Re-check this on your version.
 
 ## Claude Code — PostToolUse
 
