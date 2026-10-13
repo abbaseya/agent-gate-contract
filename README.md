@@ -82,6 +82,7 @@ Draft 0.1. Field names may still change before 1.0. Bindings for Cursor and othe
 ## Related
 
 - [agcs.dev](https://agcs.dev) is the website. It renders the specification, the evidence and the bindings from each tagged release.
+- [Agent Acceptance Contract](https://github.com/abbaseya/agent-acceptance-contract) standardises what a gate judges against. AGC standardises the gate's answer. The two share the finding `class` as their link, and its site is [aacos.dev](https://aacos.dev).
 - [SARIF](https://docs.oasis-open.org/sarif/sarif/v2.1.0/) standardises static-analysis results for tools. AGC standardises gate answers for agents, and maps onto SARIF in CI.
 
 ## License
