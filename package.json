@@ -1,6 +1,6 @@
 {
   "name": "agent-gate-contract",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "description": "Self-validation tooling for the Agent Gate Contract (AGC) standard.",
   "type": "module",
