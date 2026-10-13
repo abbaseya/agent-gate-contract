@@ -2,6 +2,7 @@
 
 > A standard JSON shape for the answer a gate (a hook, a linter, a reviewer or an auditor) gives an AI agent. It is designed to end correction loops: repair before block, the strongest remedy, a check per finding, exhaustive coverage, scoped fingerprints and a bounded attempt budget.
 
+- [agcs.dev](https://agcs.dev): the website, rendered from the tagged releases
 - [SPEC.md](SPEC.md): the normative specification
 - [schema/agc.schema.json](schema/agc.schema.json): JSON Schema 2020-12
 - [BINDINGS.md](BINDINGS.md): Claude Code hooks, Codex hooks, judgment agents, SARIF
