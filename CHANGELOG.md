@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 — 2026-10-13 (draft)
+
+- BINDINGS (Claude Code): `escalate` now also sends a `systemMessage` naming the person to ask. Measured on Claude Code 2.1.296: an interactive session shows the `stopReason`, but `claude -p` drops it. With stream-json output, the `systemMessage` reaches the caller as a `system` event. With JSON output, no text reaches the caller. Bindings are non-normative, so the contract version is unchanged.
+- SPEC.md's version line now names the release. It said 0.1.2 in the 0.1.3 release.
+
 ## 0.1.3 — 2026-10-13 (draft)
 
 - The validator package now carries the JSON Schema when it is packed, so a Yarn install from Git at a tag loads it. The specification and the schema are unchanged.
