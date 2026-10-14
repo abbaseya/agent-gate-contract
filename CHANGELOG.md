@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-10-14 (draft)
+
+- Contract version `"0.2"`. A response may carry an `id` (§3.1) and a `related` array of links (§3.2). Each link is `{rel, type, id, href?}`, the link shape of the Agent SDLC interoperability profile. AGC defines no `rel` or `type` values; a profile that uses the links owns them.
+- The schema accepts `"0.1"` and `"0.2"`. A response with `id` or `related` must declare `"0.2"`, because the 0.1 schema rejects both fields. A response without them is valid in both versions.
+- Validator: two rounds of one chain must not carry the same response `id`. New invalid examples for a link in a 0.1 response, a link without `type`, a link with an extra field, and a chain that repeats an `id`. New valid example `related-links.json`.
+- SPEC.md and BINDINGS.md no longer tie the non-normative bindings to version 0.1.
+
 ## 0.1.4 — 2026-10-13 (draft)
 
 - BINDINGS (Claude Code): `escalate` now also sends a `systemMessage` naming the person to ask. Measured on Claude Code 2.1.296: an interactive session shows the `stopReason`, but `claude -p` drops it. With stream-json output, the `systemMessage` reaches the caller as a `system` event. With JSON output, none of the three hook texts reaches the caller. Bindings are non-normative, so the contract version is unchanged.

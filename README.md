@@ -59,10 +59,15 @@ node scripts/validate-examples.js my.json   # one response
 node scripts/validate-examples.js --chain rounds/   # an ordered chain of rounds
 ```
 
-The validator checks the JSON Schema and the rules a schema cannot express. Those rules are marked **[V]** in the spec:
+The validator checks the JSON Schema and the rules a schema cannot express. The spec marks every rule the validator checks with **[V]**. The rules beyond the schema are:
 - the verdict agrees with the findings;
+- finding ids are unique within a response;
+- a finding of a deterministic gate uses a `command` or `preview` check;
+- complete coverage lists the class of every finding;
 - the attempt budget is respected;
-- a `still-open`, `regressed` or `carried` id is consistent across a chain.
+- in a chain, `attempt.n` equals the round number;
+- a `still-open`, `regressed` or `carried` id is consistent across a chain;
+- two rounds of one chain do not carry the same response `id`.
 
 ## Layout
 
@@ -75,9 +80,11 @@ The validator checks the JSON Schema and the rules a schema cannot express. Thos
 | `examples/` | valid responses, a three-round review chain, and invalid cases with the rule each breaks |
 | `packages/validator` | `validateResponse` and `validateChain` |
 
+A response may also carry an `id` and `related` links to other records, such as the work item it judged. See SPEC.md §3.1 and §3.2.
+
 ## Status
 
-Draft 0.1. Field names may still change before 1.0. Bindings for Cursor and other hook runtimes are open.
+Draft 0.2. Field names may still change before 1.0. Bindings for Cursor and other hook runtimes are open.
 
 ## Related
 

@@ -2,12 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/abbaseya/agent-gate-contract/schema/agc.schema.json",
   "title": "Agent Gate Contract response",
-  "description": "The answer a gate gives an AI agent. Version 0.1. See SPEC.md for the rules a schema cannot express.",
+  "description": "The answer a gate gives an AI agent. Versions 0.1 and 0.2. See SPEC.md for the rules a schema cannot express.",
   "type": "object",
   "required": ["agc", "gate", "subject", "verdict", "coverage", "attempt"],
   "additionalProperties": false,
   "properties": {
-    "agc": { "const": "0.1" },
+    "agc": { "enum": ["0.1", "0.2"] },
+    "id": { "type": "string", "minLength": 1 },
+    "related": { "type": "array", "items": { "$ref": "#/$defs/link" } },
     "gate": {
       "type": "object",
       "required": ["id", "kind"],
@@ -55,9 +57,24 @@
     {
       "if": { "properties": { "verdict": { "enum": ["repaired", "block", "escalate"] } } },
       "then": { "required": ["findings"], "properties": { "findings": { "minItems": 1 } } }
+    },
+    {
+      "if": { "anyOf": [{ "required": ["id"] }, { "required": ["related"] }] },
+      "then": { "properties": { "agc": { "const": "0.2" } } }
     }
   ],
   "$defs": {
+    "link": {
+      "type": "object",
+      "required": ["rel", "type", "id"],
+      "additionalProperties": false,
+      "properties": {
+        "rel": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "href": { "type": "string", "minLength": 1 }
+      }
+    },
     "finding": {
       "type": "object",
       "required": ["id", "class", "location", "what", "why", "severity", "status", "remedy", "check"],

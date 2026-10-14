@@ -1,0 +1,43 @@
+{
+  "agc": "0.2",
+  "id": "code-review/pr-42/round-1",
+  "related": [
+    {
+      "rel": "verifies",
+      "type": "orbit.execution-slice",
+      "id": "slice-004",
+      "href": "https://example.org/orbit/slices/slice-004"
+    },
+    {
+      "rel": "verifies",
+      "type": "orbit.acceptance-criterion",
+      "id": "ac-2"
+    }
+  ],
+  "gate": {
+    "id": "code-review",
+    "kind": "judgment",
+    "version": "1"
+  },
+  "subject": {
+    "kind": "diff",
+    "fingerprint": "sha256:3a91d07c5e28",
+    "scope": [
+      "app/auth/sso.ts",
+      "app/auth/sso.test.ts"
+    ]
+  },
+  "verdict": "allow",
+  "findings": [],
+  "coverage": {
+    "complete": true,
+    "classes": [
+      "missing-test",
+      "unhandled-error"
+    ]
+  },
+  "attempt": {
+    "n": 1,
+    "budget": 3
+  }
+}

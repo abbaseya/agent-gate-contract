@@ -90,10 +90,15 @@ export function validateChain(responses) {
   const errors = [];
   const raised = new Set();
   const closed = new Set();
+  const responseIds = new Set();
   responses.forEach((response, round) => {
     validateResponse(response).forEach((error) => errors.push({ ...error, path: `[${round}]${error.path}` }));
     if (response.attempt?.n !== round + 1) {
       errors.push(diagnostic(`[${round}]/attempt/n`, '§9', `round ${round + 1} carries attempt ${response.attempt?.n}`));
+    }
+    if (response.id !== undefined) {
+      if (responseIds.has(response.id)) errors.push(diagnostic(`[${round}]/id`, '§3.1', `response id ${response.id} is used by an earlier round`));
+      responseIds.add(response.id);
     }
     const findings = response.findings || [];
     const ids = new Set(findings.map((finding) => finding.id));
