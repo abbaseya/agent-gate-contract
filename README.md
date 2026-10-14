@@ -59,7 +59,7 @@ node scripts/validate-examples.js my.json   # one response
 node scripts/validate-examples.js --chain rounds/   # an ordered chain of rounds
 ```
 
-The validator checks the JSON Schema and the rules a schema cannot express. Those rules are marked **[V]** in the spec:
+The validator checks the JSON Schema and the rules a schema cannot express. The spec marks every rule the validator checks with **[V]**. The rules beyond the schema are:
 - the verdict agrees with the findings;
 - the attempt budget is respected;
 - a `still-open`, `regressed` or `carried` id is consistent across a chain;
