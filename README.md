@@ -61,7 +61,11 @@ node scripts/validate-examples.js --chain rounds/   # an ordered chain of rounds
 
 The validator checks the JSON Schema and the rules a schema cannot express. The spec marks every rule the validator checks with **[V]**. The rules beyond the schema are:
 - the verdict agrees with the findings;
+- finding ids are unique within a response;
+- a finding of a deterministic gate uses a `command` or `preview` check;
+- complete coverage lists the class of every finding;
 - the attempt budget is respected;
+- in a chain, `attempt.n` equals the round number;
 - a `still-open`, `regressed` or `carried` id is consistent across a chain;
 - two rounds of one chain do not carry the same response `id`.
 
