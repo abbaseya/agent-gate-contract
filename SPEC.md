@@ -41,7 +41,9 @@ A response is one JSON object. JSON is the only normative representation.
 | `attempt` | MUST | object | §10 |
 | `carried` | MAY | array of finding ids | earlier findings this response accepts as closed (§9) |
 
-A response without `id` and `related` is valid in both versions. A response that carries `id` or `related` MUST declare `"0.2"`, because a 0.1 reader rejects both fields.
+A response without `id` and `related` is valid in both versions.
+
+- **[V]** A response that carries `id` or `related` MUST declare `"0.2"`, because a 0.1 reader rejects both fields.
 
 ### 3.1 Response id
 
