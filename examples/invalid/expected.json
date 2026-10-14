@@ -7,5 +7,9 @@
   "decide-without-options.json": "schema",
   "block-without-findings.json": "schema",
   "invalid-chains/still-open-never-raised": "\u00a79",
-  "block-with-unapplied-rewrite.json": "\u00a76"
+  "block-with-unapplied-rewrite.json": "\u00a76",
+  "related-in-0.1.json": "schema",
+  "link-without-type.json": "schema",
+  "link-with-extra-field.json": "schema",
+  "invalid-chains/duplicate-response-id": "\u00a73.1"
 }

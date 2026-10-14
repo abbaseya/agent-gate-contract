@@ -1,6 +1,6 @@
 # Agent Gate Contract (AGC) Specification
 
-**Version 0.1.4 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
+**Version 0.2.0 — draft.** This is the single normative reference for the Agent Gate Contract. `README.md` is the tour, `EVIDENCE.md` is the measurement behind each rule, and [`schema/agc.schema.json`](schema/agc.schema.json) encodes the fields. [`packages/validator`](packages/validator) enforces the schema plus the rules a JSON Schema cannot express. The rules it checks are marked **[V]** below.
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** follow [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
@@ -30,7 +30,9 @@ A response is one JSON object. JSON is the only normative representation.
 
 | Field | Required | Type | Meaning |
 |---|---|---|---|
-| `agc` | MUST | `"0.1"` | contract version |
+| `agc` | MUST | `"0.1"` or `"0.2"` | contract version |
+| `id` | MAY | string | identifier of this response (§3.1). Only in `"0.2"`. |
+| `related` | MAY | array of links | other records this response refers to (§3.2). Only in `"0.2"`. |
 | `gate` | MUST | object | §4 |
 | `subject` | MUST | object | what was judged (§5) |
 | `verdict` | MUST | enum | `allow`, `repaired`, `block` or `escalate` (§6) |
@@ -38,6 +40,33 @@ A response is one JSON object. JSON is the only normative representation.
 | `coverage` | MUST | object | what was checked and what was not (§8) |
 | `attempt` | MUST | object | §10 |
 | `carried` | MAY | array of finding ids | earlier findings this response accepts as closed (§9) |
+
+A response without `id` and `related` is valid in both versions. A response that carries `id` or `related` MUST declare `"0.2"`, because a 0.1 reader rejects both fields.
+
+### 3.1 Response id
+
+`id` names one response, so that another record can cite it. Finding ids name one violation; `id` names the whole answer.
+
+- `id` MUST be unique among the responses of its gate. Each round of a chain is a new response with a new `id`.
+- `id` MUST NOT change after the response is sent.
+- **[V]** Two rounds of one chain MUST NOT carry the same `id`.
+
+### 3.2 Related links
+
+`related` lets a response point at the records it concerns, such as the work item or the criterion it judged. Each link is one object:
+
+| Field | Required | Meaning |
+|---|---|---|
+| `rel` | MUST | the relationship, read from this response to the target |
+| `type` | MUST | the type of the target |
+| `id` | MUST | the target's identifier |
+| `href` | MAY | where the target can be found |
+
+- **[V]** A link MUST carry `rel`, `type` and `id`, and no other field.
+- AGC defines no `rel` or `type` values. A profile that uses the links defines them and owns them.
+- A link is a claim, not proof. It does not change the verdict, the findings or any **[V]** rule.
+- A consumer MUST NOT reject a response because a link target cannot be resolved.
+- A consumer MUST treat `href` as untrusted input, and MUST NOT run what it points to only because a response links to it.
 
 ## 4. Gate
 
@@ -187,7 +216,7 @@ A runtime that shows a response to a person or to a model as text SHOULD render 
 
 ## 13. Runtime bindings
 
-See [`BINDINGS.md`](BINDINGS.md). Bindings are non-normative in 0.1.
+See [`BINDINGS.md`](BINDINGS.md). Bindings are non-normative.
 
 ## Change history
 

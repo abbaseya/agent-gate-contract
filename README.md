@@ -75,9 +75,11 @@ The validator checks the JSON Schema and the rules a schema cannot express. Thos
 | `examples/` | valid responses, a three-round review chain, and invalid cases with the rule each breaks |
 | `packages/validator` | `validateResponse` and `validateChain` |
 
+A response may also carry an `id` and `related` links to other records, such as the work item it judged. See SPEC.md §3.1 and §3.2.
+
 ## Status
 
-Draft 0.1. Field names may still change before 1.0. Bindings for Cursor and other hook runtimes are open.
+Draft 0.2. Field names may still change before 1.0. Bindings for Cursor and other hook runtimes are open.
 
 ## Related
 

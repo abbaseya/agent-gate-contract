@@ -49,6 +49,23 @@ test('a carried finding cannot be reported in the same round', () => {
   assert.ok(rules.some((message) => message.includes('both carried and reported')));
 });
 
+test('a response without id and related is valid as 0.1 and as 0.2', () => {
+  const response = load('allow.json');
+  assert.deepEqual(validateResponse({ ...response, agc: '0.1' }), []);
+  assert.deepEqual(validateResponse({ ...response, agc: '0.2' }), []);
+});
+
+test('a response id needs version 0.2', () => {
+  const rules = validateResponse({ ...load('allow.json'), agc: '0.1', id: 'no-push-to-main/1' }).map((error) => error.rule);
+  assert.ok(rules.includes('schema'));
+});
+
+test('a chain with a new response id in each round passes', () => {
+  const rounds = loadChain('invalid-chains/duplicate-response-id');
+  rounds[1].id = 'code-review/pr-42/round-2';
+  assert.deepEqual(validateChain(rounds), []);
+});
+
 test('a non-object is rejected', () => {
   assert.equal(validateResponse([])[0].rule, 'schema');
 });

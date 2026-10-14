@@ -1,6 +1,6 @@
 # Runtime bindings
 
-How an AGC response travels through a real runtime. Bindings are **non-normative in 0.1**. A binding marked *verified* was checked against the runtime's own documentation. A binding marked *open* is not yet written.
+How an AGC response travels through a real runtime. Bindings are **non-normative**. A binding marked *verified* was checked against the runtime's own documentation. A binding marked *open* is not yet written.
 
 | Runtime | Status |
 |---|---|
